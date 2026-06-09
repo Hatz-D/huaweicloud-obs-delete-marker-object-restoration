@@ -2,7 +2,7 @@
 This repository is home to a script that automatically scans the target OBS bucket and restores all objects with the <code>delete marker</code> set.
 
 ## FunctionGraph
-In order to run the script, it is necessary to create a FunctionGraph function on Huawei Cloud first and foremost. The runtime is <code>Python3.9</code> and the function is <code>Event-Based</code>. Once created, the following parameters must be configured:
+In order to run the script, it is necessary to create a <a href="https://support.huaweicloud.com/eu/usermanual-functiongraph/functiongraph_01_1441.html">FunctionGraph</a> function on Huawei Cloud first and foremost. The runtime is <code>Python3.9</code> and the function is <code>Event-Based</code>. Once created, the following parameters must be configured:
 
 ### Dependencies
 Import the dependency <code>esdk_obs_python-3.22.2_python39</code>.
@@ -10,7 +10,7 @@ Import the dependency <code>esdk_obs_python-3.22.2_python39</code>.
 ### Environment Variables
 Configure the following environment variables for the function:
 <ul>
-  <li><code>region</code>: Region where the OBS bucket has been created;</li>
+  <li><code>region</code>: <a href="https://support.huaweicloud.com/intl/en-us/usermanual-organizations/org_03_0082.html">Region code</a> where the OBS bucket has been created;</li>
   <li><code>bucket_name</code>: Name of the target OBS bucket;</li>
   <li><code>page_size</code>: Defaults to 1000. It is the number of objects that can be retrieved by a single <code>listObjects</code> API call.</li>
 </ul>
