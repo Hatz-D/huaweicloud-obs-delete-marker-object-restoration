@@ -3,6 +3,7 @@
 
 from obs import ObsClient, Object, DeleteObjectsRequest, Versions
 
+# Function to query the objects with the delete marker from the specified OBS bucket
 def queryDeleteMarkerObjects(client, bucketName, pageSize):
     objectList = []
  
@@ -10,6 +11,8 @@ def queryDeleteMarkerObjects(client, bucketName, pageSize):
     nextVersionIdMarker = None
     index = 1
 
+    # The maximum number of retrieved objects by the API is 1000. In order to query all objects, it is necessary to use 
+    # the parameters key_marker and version_id_marker to control which objects should be retrieved by each iteration.
     while True:
         resp = client.listVersions(bucketName, Versions(key_marker=nextKeyMarker, version_id_marker=nextVersionIdMarker,
                                                            max_keys=pageSize))
@@ -27,11 +30,13 @@ def queryDeleteMarkerObjects(client, bucketName, pageSize):
     
     return objectList
 
-
+# Function to delete the objects retrieved with the delete marker tag
 def deleteDeleteMarkerObjects(client, bucketName, objectList):
     startIndex = 0
     endIndex = 0
 
+    # The maximum number of deleted objects by the API is 1000. In order to delete all objects, it is necessary to  
+    # use the parameters startIndex and endIndex to control which objects should be deleted by each iteration.
     while(startIndex < len(objectList)):
         endIndex = len(objectList) if (endIndex + 1000) > len(objectList) else endIndex + 1000
 
@@ -49,7 +54,7 @@ def deleteDeleteMarkerObjects(client, bucketName, objectList):
 
         startIndex = endIndex
 
-
+# Main function that is invoked by FunctionGraph
 def handler (event, context):
     ak = context.getSecurityAccessKey()
     sk = context.getSecuritySecretKey()
